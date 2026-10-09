@@ -1,16 +1,21 @@
-# Profile setup — DomeNinchen
+# Installation — DomeNinchen GitHub Profile
 
-Place `README.md` and `.github/workflows/metrics.yml` in the **DomeNinchen/DomeNinchen** repository using a feature branch and a pull request.
+This version recreates the ORIGINAL dark mockup using local SVG panels. It is not a new page layout. GitHub README files do not support arbitrary CSS containers, so the cards are images, while the project links remain clickable Markdown badges. Unlike a full website, exact native Markdown layout rendering is not possible.
 
-## Enable Developer Metrics
+## Install via pull request
 
-1. Create a GitHub personal access token for metrics. For public-only metrics, use the least privileges supported by the metrics project and your selected token type. Do not commit the token.
-2. In the profile repository, add it under **Settings → Secrets and variables → Actions → New repository secret**, named `METRICS_TOKEN`.
-3. In **Settings → Actions → General → Workflow permissions**, allow GitHub Actions to create pull requests, if necessary. Repository / organization policy may override this setting.
-4. Merge the README and workflow PR, then manually run **Generate Developer Metrics** using **Actions → Run workflow**.
-5. Review and merge the generated metrics pull request. The `github-metrics.svg` image will then appear on your profile.
-6. Weekly subsequent runs generate PRs for metrics updates; review and merge them rather than committing directly to main.
+1. Create a branch in `DomeNinchen/DomeNinchen`.
+2. Copy **all** files, including `assets/` and `.github/workflows/metrics.yml`, to the profile repository root.
+3. Open a pull request, review and merge into `main`.
+4. GitHub will load the local SVG panels automatically, including the rotating terminal status text (animation support depends on the browser and GitHub renderer).
 
-The terminal header uses external services (`capsule-render.vercel.app` and `readme-typing-svg.demolab.com`), and badges use `img.shields.io`. If a service goes offline, the corresponding graphic may be unavailable. The custom dark styling is for embedded assets; GitHub's surrounding page is controlled by the viewer's theme.
+## Enable developer metrics
 
-The `lowlighter/metrics@latest` action is a floating release reference. For higher supply-chain assurance, pin the action to a reviewed commit SHA and periodically update it.
+1. Inspect `.github/workflows/metrics.yml` and the upstream project [lowlighter/metrics](https://github.com/lowlighter/metrics), especially token permissions.
+2. Create a GitHub PAT with only the permissions necessary to gather your chosen metrics. Store it in the profile repo Actions secrets as `METRICS_TOKEN`. Never commit the token.
+3. Enable Actions to create pull requests where repository policy permits it.
+4. Trigger **Generate Developer Metrics** manually in the Actions tab after the workflow is merged.
+5. Review and merge the generated PR containing `github-metrics.svg`.
+6. Scheduled refreshes also create PRs; merge after reviewing.
+
+**Notes:** The stats image will not appear before `github-metrics.svg` exists. SVG styling is baked into assets; users may use a light GitHub theme around the cards. Text embedded in SVGs is not selectable as README text. Metrics rely on the upstream action, and badges rely on Shields.io.
